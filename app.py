@@ -15,8 +15,38 @@ matching_service = MatchingService()
 def test_endpoint():
     return {"message": "API is working!"}, 200
 
+
+
+
+
+
+
+
+#TODO
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
+@app.route("/investor", methods=["POST"])
+def handle_investor_form():
+    data = request.get_json()  # Capture the JSON payload from the React frontend
+    if not data:
+        return {"message": "No data provided"}, 400
+    
+    # You can process the data here
+    # Example: log the data for debugging or save it to a database
+    try:
+        print("Received data:", data)
+
+        # Example of processing or saving the data
+        Client.process_investor_data(data)  # Replace with your actual logic
+
+        return {"message": "Investor profile submitted successfully!"}, 200
+    except Exception as e:
+        print("Error:", e)
+        return {"message": "An error occurred while processing the data."}, 500
+
+
 
 @app.route('/add_client', methods=['POST'])
 def add_client():
